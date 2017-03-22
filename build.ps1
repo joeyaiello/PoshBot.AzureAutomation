@@ -61,4 +61,3 @@ if ($PSBoundParameters.ContainsKey('help')) {
     Invoke-psake -buildFile "$PSScriptRoot\psake.ps1" -taskList $Task -nologo -Verbose:$VerbosePreference
     exit ( [int]( -not $psake.build_success ) )
 }
-
