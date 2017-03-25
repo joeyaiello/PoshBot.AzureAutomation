@@ -1,11 +1,12 @@
 
-function Giphy {
+function Get-Giphy {
     <#
     .SYNOPSIS
         Search Giphy
     .EXAMPLE
         !giphy (--search 'cats' [--number 3] | --trending [--number 3])
     #>
+    [PoshBot.BotCommand(CommandName = 'giphy')]
     [cmdletbinding(DefaultParameterSetName = 'search')]
     param(
         [parameter(Mandatory, Position = 0, ParameterSetName = 'search')]
@@ -37,3 +38,5 @@ function Giphy {
         Write-Output 'No results found'
     }
 }
+
+Export-ModuleMember -Function Get-Giphy
