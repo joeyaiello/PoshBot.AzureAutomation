@@ -12,7 +12,7 @@
 RootModule = 'PoshBot.Giphy.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.1'
+ModuleVersion = '1.0.2'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -33,7 +33,7 @@ Copyright = '(c) 2017 Brandon Olin. All rights reserved.'
 Description = 'PoshBot plugin to search Giphy'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '3.0'
+PowerShellVersion = '5.0'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -51,7 +51,7 @@ PowerShellVersion = '3.0'
 # ProcessorArchitecture = ''
 
 # Modules that must be imported into the global environment prior to importing this module
-# RequiredModules = @()
+RequiredModules = @('PoshBot')
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
@@ -72,13 +72,13 @@ PowerShellVersion = '3.0'
 FunctionsToExport = 'Get-Giphy'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = '*'
+CmdletsToExport = @()
 
 # Variables to export from this module
-VariablesToExport = '*'
+VariablesToExport = @()
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-AliasesToExport = '*'
+AliasesToExport = @()
 
 # DSC resources to export from this module
 # DscResourcesToExport = @()
@@ -107,8 +107,19 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        # ReleaseNotes = ''
+        ReleaseNotes = @'
+## [1.0.2] - 2017-06-09
+### Fixed
+- Set PoshBot as a required module in the manifest.
 
+## [1.0.1] - 2017-03-24
+### Changed
+- Explicitly export function in module manifest
+
+## [1.0.0] - 2017-03-21
+### Added
+- Initial commit
+'@
     } # End of PSData hashtable
 
 } # End of PrivateData hashtable
