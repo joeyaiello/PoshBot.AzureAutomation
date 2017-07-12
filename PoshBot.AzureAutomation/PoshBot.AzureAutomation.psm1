@@ -35,7 +35,7 @@ function Get-DscNodeStatus {
         !dscstatus -resourcegroup foo -automationaccount bar -name baz
     #>
     [PoshBot.BotCommand(CommandName = 'dscstatus')]
-    [cmdletbinding(DefaultParameterSetName = 'Name')]
+    [cmdletbinding()]
     param(
         [parameter(Mandatory, Position = 0)]
         [Alias('rg')]
@@ -83,7 +83,7 @@ function Get-DscNodeStatus {
 
 function Set-DscNodeConfiguration {
     [PoshBot.BotCommand(CommandName = 'dscconfig')]
-    [cmdletbinding(DefaultParameterSetName = 'Id')]
+    [cmdletbinding()]
     param(
         [parameter(Mandatory, Position = 0)]
         [Alias('rg')]
