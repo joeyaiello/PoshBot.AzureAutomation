@@ -37,18 +37,20 @@ function Get-DscNodeStatus {
     [PoshBot.BotCommand(CommandName = 'dscstatus')]
     [cmdletbinding()]
     param(
-        [parameter(Mandatory, Position = 0)]
+        [parameter(Mandatory, Position = 0, ParameterSetName = 'Name')]
+        [parameter(Mandatory, Position = 0, ParameterSetName = 'Id')]
         [Alias('rg')]
         [string]$ResourceGroup,
 
-        [parameter(Mandatory, Position = 1)]
+        [parameter(Mandatory, Position = 1, ParameterSetName = 'Name')]
+        [parameter(Mandatory, Position = 1, ParameterSetName = 'Id')]
         [Alias('aa')]
         [string]$AutomationAccount,
 
         [parameter(Position = 2, ParameterSetName = 'Name')]
         [string]$Name,
 
-        [parameter(ParameterSetName = 'Id')]
+        [parameter(Position = 2, ParameterSetName = 'Id')]
         [string]$Id
     )
 
@@ -98,14 +100,22 @@ function Set-DscNodeConfiguration {
 
         [parameter(Mandatory, Position = 3)]
         [Alias('config')]
-        [string]$ConfigurationName
+        [string]$ConfigurationName,
+        
+        [parameter()]
+        [switch]$Force
     )
 
     Import-Module AzureBot
     Invoke-ChatBotLogin
 
-    Set-AzureRmAutomationDscNode -ResourceGroupName $ResourceGroup -AutomationAccountName $AutomationAccount -Id $Id -NodeConfigurationName $ConfigurationName
+    if (-not $Force) {
+        Set-AzureRmAutomationDscNode -ResourceGroupName $ResourceGroup -AutomationAccountName $AutomationAccount -Id $Id -NodeConfigurationName $ConfigurationName -WhatIf
+        Write-Output 'Use -Force to actually run this command.'
+    }
+    else {
+        Set-AzureRmAutomationDscNode -ResourceGroupName $ResourceGroup -AutomationAccountName $AutomationAccount -Id $Id -NodeConfigurationName $ConfigurationName -Force
+    }
 }
-
 
 Export-ModuleMember -Function Get-DscNodeStatus, Set-DscNodeConfiguration
