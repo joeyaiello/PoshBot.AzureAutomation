@@ -1,5 +1,5 @@
 # How to contribute
-Contributions to PoshBot.Giphy are highly encouraged and desired. Below are some guidelines that will help make the process as smooth as possible.
+Contributions to PoshBot.AzureAutomation are highly encouraged and desired. Below are some guidelines that will help make the process as smooth as possible.
 
 # Getting Started
 * Make sure you have a [GitHub account](https://github.com/signup/free)
