@@ -38,14 +38,18 @@ function Get-DscNodeStatus {
     [cmdletbinding(DefaultParameterSetName = 'Name')]
     param(
         [parameter(Mandatory, Position = 0)]
+        [Alias('rg')]
         [string]$ResourceGroup,
 
-        [parameter(Mandatory, Position = 1, ParameterSetName = 'All')]
+        [parameter(Mandatory, Position = 1)]
+        [Alias('aa')]
         [string]$AutomationAccount,
 
         [parameter(Position = 2, ParameterSetName = 'Name')]
-        #[Alias('Count')]
-        [string]$Name
+        [string]$Name,
+
+        [parameter(ParameterSetName = 'Id')]
+        [string]$Id
     )
 
     Import-Module AzureBot
@@ -64,8 +68,8 @@ function Get-DscNodeStatus {
     }
 #>
 
-    if ($PSCmdlet.ParameterSetName -eq 'All') {
-        $status = Get-AzureRmAutomationDscNode -ResourceGroupName $ResourceGroup -AutomationAccountName $AutomationAccount
+    if ($PSCmdlet.ParameterSetName -eq 'Id') {
+        $status = Get-AzureRmAutomationDscNode -ResourceGroupName $ResourceGroup -AutomationAccountName $AutomationAccount -Id $Id
         Write-Output $status
     }
     elseif ($PSCmdlet.ParameterSetName -eq 'Name') {
@@ -73,8 +77,35 @@ function Get-DscNodeStatus {
         Write-Output $status
     }
     else {
-        Write-Output 'Something went wrong'
+        Write-Output $status
     }
 }
 
-Export-ModuleMember -Function Get-DscNodeStatus
+function Set-DscNodeConfiguration {
+    [PoshBot.BotCommand(CommandName = 'dscconfig')]
+    [cmdletbinding(DefaultParameterSetName = 'Id')]
+    param(
+        [parameter(Mandatory, Position = 0)]
+        [Alias('rg')]
+        [string]$ResourceGroup,
+
+        [parameter(Mandatory, Position = 1)]
+        [Alias('aa')]
+        [string]$AutomationAccount,
+
+        [parameter(Mandatory, Position = 2)]
+        [string]$Id,
+
+        [parameter(Mandatory, Position = 3)]
+        [Alias('config')]
+        [string]$ConfigurationName
+    )
+
+    Import-Module AzureBot
+    Invoke-ChatBotLogin
+
+    Set-AzureRmAutomationDscNode -ResourceGroupName $ResourceGroup -AutomationAccountName $AutomationAccount -Id $Id -NodeConfigurationName $ConfigurationName
+}
+
+
+Export-ModuleMember -Function Get-DscNodeStatus, Set-DscNodeConfiguration
